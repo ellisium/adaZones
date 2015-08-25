@@ -1,0 +1,25 @@
+module.exports=
+[
+		{
+			index:[0,193],
+			leds:194,
+			header:true
+		},
+		{
+			index:194,
+			leds:27
+		},
+		{
+			index:195,
+			leds:27
+		},
+		{
+			name:'lamp', //override settings.name
+			index:196,
+			leds:50,
+			type:'COM',
+			port:'COM7', //override settings.port
+			header:true,
+			delay:10
+		}
+	];

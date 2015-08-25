@@ -1,0 +1,7 @@
+module.exports={
+		stdin:"\\\\.\\pipe\\hyperion",
+		name:'ambilight',
+		type:'COM',
+		port:'COM5',
+		baudrate:500000
+};

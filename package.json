@@ -1,0 +1,24 @@
+{
+  "name": "adaZones",
+  "version": "0.0.1",
+  "description": "Adalight multizones protocol gestion",
+  "keywords": [
+    "adalight",
+    "multizones",
+    "multicards",
+    "hyperion"
+  ],
+  "authors": [
+    "Eric Le Lay <eric.lelay@gmail.com>",
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ellisium/adaZones.git"
+  },
+  "dependencies":{
+      "color"             :"0.10.1",
+      "async"             :"1.4.2",
+      "serialport"        :"1.7.4"
+  }
+}
