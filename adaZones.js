@@ -35,8 +35,8 @@ module.exports={
 	},
 	init:function(zone){
 		var self= this;
-		var zones=require(__dirname'\\zones\\'+zone+'.json'),
-		settings=require(__dirname'\\settings.json');
+		var zones=require(__dirname+'\\zones\\'+zone+'.json'),
+		settings=require(__dirname+'\\settings.json');
 		self.zones=zones;
 		self.settings=settings;
 		self.settingsBytes.call(self);
