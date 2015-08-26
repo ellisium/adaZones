@@ -118,7 +118,7 @@ module.exports={
 								if(zone.mode){
 									zone.tmp.push(data.slice(ii, ii+1));
 								}else{
-									switch(zone.mode){
+									switch(zone.mode == true){
 										case 'off':self.zones[lastZone].tmp.push(new Buffer(['00']));
 										break;
 										case 'color':
@@ -128,7 +128,7 @@ module.exports={
 									}
 								}
 							}else{
-								if(zone.mode){
+								if(zone.mode == true){
 									self.zones[lastZone].tmp.push(data.slice(ii, ii+1));
 								}else{
 									switch(zone.mode){
@@ -266,6 +266,10 @@ module.exports={
 			});
 		}
 	},
+	setPassthru:function(index){
+		var self=this;
+		self.zones[index].mode=true;
+	},
 	turnLastState:undefined,
 	turnOn:function(index){
 		var self=this;
@@ -301,6 +305,7 @@ module.exports={
 			c++;
 			if(c===3)c=0;
 		}
+		zone.mode='color';
 		return zone.color;
 	},
 	clearColor:function(index){
