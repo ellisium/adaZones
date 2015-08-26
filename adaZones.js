@@ -3,7 +3,7 @@ SerialPort = serialPort.SerialPort,
 exec = require('child_process').exec,
 fs = require('fs'),
 async=require('async'),
-color=require('color'),
+color=require('color');
 module.exports={
 	settingsBytes:function(){
 		var self=this;
