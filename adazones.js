@@ -288,12 +288,12 @@ module.exports={
 		var self=this;
 		var zone=self.zones[index],
 		c=0; 
-		if(!zone.hasOwnProperty('color'))zone.color=color();
+		zone.color=color();
 		if(typeof colors ==='string'){
 			if(lvl){
-				zone.colorValues=zone.color[colors](lvl).values
+				zone.colorValues=zone.color()[colors](lvl).values
 			}else{
-				zone.colorValues=zone.color[colors](255).values;
+				zone.colorValues=zone.color()[colors](255).values;
 			}
 			colors=[zone.colorValues.rgb[1],zone.colorValues.rgb[0],zone.colorValues.rgb[2]];
 		}else{
