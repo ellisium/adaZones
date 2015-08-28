@@ -290,12 +290,16 @@ module.exports={
 		c=0; 
 		zone.color=color();
 		if(typeof colors ==='string'){
-			if(lvl){
-				zone.colorValues=zone.color()[colors](lvl).values
+			if(colors === 'white'){
+				colors=self.settings.white;
 			}else{
-				zone.colorValues=zone.color()[colors](255).values;
+				if(lvl){
+					zone.colorValues=zone.color[colors](lvl).values
+				}else{
+					zone.colorValues=zone.color[colors](255).values;
+				}
+				colors=[zone.colorValues.rgb[1],zone.colorValues.rgb[0],zone.colorValues.rgb[2]];
 			}
-			colors=[zone.colorValues.rgb[1],zone.colorValues.rgb[0],zone.colorValues.rgb[2]];
 		}else{
 			zone.colorValues=zone.color.rgb(colors);
 		}

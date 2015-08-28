@@ -3,5 +3,6 @@
 		"name":"ambilight",
 		"type":"COM",
 		"port":"COM5",
+		"white":[255,255,255],
 		"baudrate":500000
 }
