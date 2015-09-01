@@ -266,9 +266,14 @@ module.exports={
 			});
 		}
 	},
-	setPassthru:function(index){
+	setPassthruOn:function(index){
 		var self=this;
+		self.turnLastState=self.zones[index].mode;
 		self.zones[index].mode=true;
+	},
+	setPassthruOff:function(index){
+		var self=this;
+		self.zones[index].mode=self.turnLastState;
 	},
 	turnLastState:undefined,
 	turnOn:function(index){
