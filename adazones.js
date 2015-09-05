@@ -4,6 +4,7 @@ exec = require('child_process').exec,
 fs = require('fs'),
 async=require('async'),
 color=require('color');
+
 module.exports={
 	settingsBytes:function(){
 		var self=this;
@@ -41,8 +42,11 @@ module.exports={
 		self.settings=settings;
 		self.settingsBytes.call(self);
 		console.log('init')
-		self.stream.init.call(self,self.settings.stdin);
-		self.connections.init.call(self);	
+		self.connections.init.call(self);
+		setTimeout(function(){
+			self.stream.init.call(self,self.settings.stdin);
+		},10000);
+			
 	},
 	bytes:{
 		headerData:[],
@@ -115,10 +119,10 @@ module.exports={
 						if(((startBytes+ii) >= zone.bytesRange[0]) && ((startBytes+ii)<=zone.bytesRange[1])){
 							if(zone.header){
 								lastZone=i;
-								if(zone.mode){
+								if(zone.mode == true){
 									zone.tmp.push(data.slice(ii, ii+1));
 								}else{
-									switch(zone.mode == true){
+									switch(zone.mode){
 										case 'off':self.zones[lastZone].tmp.push(new Buffer(['00']));
 										break;
 										case 'color':
@@ -266,6 +270,7 @@ module.exports={
 			});
 		}
 	},
+	turnLastState:undefined,
 	setPassthruOn:function(index){
 		var self=this;
 		self.turnLastState=self.zones[index].mode;
@@ -275,12 +280,11 @@ module.exports={
 		var self=this;
 		self.zones[index].mode=self.turnLastState;
 	},
-	turnLastState:undefined,
 	turnOn:function(index){
 		var self=this;
 		self.zones[index].mode=self.turnLastState;
 	},
-	turnOff:function(index){
+	turnOff:function(index){ 
 		var self=this;
 		self.turnLastState=self.zones[index].mode;
 		self.zones[index].mode='off';
