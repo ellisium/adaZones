@@ -9,7 +9,12 @@ some examples with my config:
 Install: npm install adazones
 
 -In settings.json, set your adalight stream source.
-
+- Edit the batch file : pathfile / port number /zone name
+- 
 -usage:
+Mode module :
   var adazones = require("adazones");
   adazones.init( your zone filename);
+
+Mode server
+node pathfile/adazones.js port:XXXXX zone:XXX
