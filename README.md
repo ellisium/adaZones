@@ -11,5 +11,5 @@ Install: npm install adazones
 -In settings.json, set your adalight stream source.
 
 -usage:
-var adazones = require("adazones");
-adazones.init( your zone filename);
+  var adazones = require("adazones");
+  adazones.init( your zone filename);
