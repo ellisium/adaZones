@@ -1,11 +1,17 @@
-var serialPort = require("serialport"),
+//process.arg node path/adazones.js port:XXXX zone:AAAA will start net server
+var settings=require(__dirname+'\\settings.json'),
+serialPort = require("serialport"),
 SerialPort = serialPort.SerialPort,
-exec = require('child_process').exec,
 fs = require('fs'),
 async=require('async'),
-color=require('color');
+color=require('color'),
+http = require('http'),
+exec=require('child_process').exec,
+portNumber=null,
+zoneName=null,
+processExe=false;
 
-module.exports={
+var adalight={
 	settingsBytes:function(){
 		var self=this;
 		var total=0; 
@@ -34,19 +40,39 @@ module.exports={
 		}
 		self.settings.bytesTotal=total+6;
 	},
-	init:function(zone){
+	init:function(zone, port){
 		var self= this;
-		var zones=require(__dirname+'\\zones\\'+zone+'.json'),
-		settings=require(__dirname+'\\settings.json');
+
+		var zones=require(__dirname+'\\zones\\'+zone+'.json');
 		self.zones=zones;
 		self.settings=settings;
 		self.settingsBytes.call(self);
-		console.log('init')
 		self.connections.init.call(self);
-		setTimeout(function(){
-			self.stream.init.call(self,self.settings.stdin);
-		},10000);
-			
+		
+			exec('VBoxmanage startvm "'+settings.VM+'" --type headless', function(e, stdout, stderr){
+				if(e)console.log(e)
+				exec('VBoxmanage list runningvms', function(e, stdout, stderr){
+					if(e)process.exit();
+					if(stdout.match('hyperion'))self.stream.init.call(self,self.settings.stdin);
+				});
+			});
+		
+
+		if(port){
+			self.server = http.createServer(),
+			io = require('socket.io').listen(self.server);
+
+			self.socketAdazones = io.of('/adaZones');
+			self.socketAdazones.on('connection', function (socket) {
+				self.socketAdazones.emit('zones', self.zones);
+				console.log('Un client est connecté au websocket adaZones!');
+				socket.on('cmd', function (obj, fn) {
+					var res=self[obj.cmd].apply(self, obj.args);
+					fn(0, res); // success
+				});
+			});
+			self.server.listen(port);
+		}
 	},
 	bytes:{
 		headerData:[],
@@ -197,6 +223,7 @@ module.exports={
 		count:0,
 		data:[],
 		init:function (file){
+			console.log('init stdin adalight')
 			var self= this; 
 			self.stream.stdin = fs.createReadStream(file);
 			self.stream.stdin.on('error', function (e) {
@@ -213,17 +240,20 @@ module.exports={
 				}catch(err){console.log(err)}
 				process.exit();
 			})
-			.on('data',function(data){ 
-				self.stream.data.push(data);			
-				self.bytes.sendData.call(self, function(){
-					var wrData=Buffer.concat(self.stream.data);
-					self.stream.data=[];
-					self.bytes.splitData.call(self,wrData);
-				});
-			})
 			.on('end', function(){
 				console.log('end of stream')
 			});
+			
+				self.stream.stdin.on('data',function(data){ 
+					console.log(data);
+					self.stream.data.push(data);			
+					self.bytes.sendData.call(self, function(){
+						var wrData=Buffer.concat(self.stream.data);
+						self.stream.data=[];
+						self.bytes.splitData.call(self,wrData);
+					});
+				});
+		
 		}
 	},
 	connections:{
@@ -361,3 +391,20 @@ module.exports={
 		return self;
 	}
 }
+
+process.argv.forEach(function(val, index, array) {
+  if(val.match('port')){
+  	processExe=true;
+  	portNumber=parseInt(val.split(':')[1]);
+  }
+  if(val.match('zone')){
+  	zoneName=val.split(':')[1];
+  }
+});
+
+if(processExe){
+	console.log(zoneName,portNumber)
+	var app= adalight.init(zoneName, portNumber);
+}
+
+module.exports=adalight;

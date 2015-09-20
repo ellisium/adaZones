@@ -4,5 +4,6 @@
 		"type":"COM",
 		"port":"COM5",
 		"white":[255,255,255],
-		"baudrate":500000
+		"baudrate":500000,
+		"VM":"hyperion"
 }
