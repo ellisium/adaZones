@@ -7,11 +7,24 @@ some examples with my config:
 [![Everything Is AWESOME](http://i.ytimg.com/vi_webp/VqgWH9E7EC0/mqdefault.webp)](https://youtu.be/VqgWH9E7EC0)
 
 Install: npm install adazones
+TODO: VM install instructions coming soon
 
--In settings.json, set your adalight stream source.
-- Edit the batch file : pathfile / port number /zone name
+Configure settings.json:
 
--usage:
+
+		"stdin":"\\\\.\\pipe\\hyperion",  -> adalight stream from hyperion (VM pipe or dev/ttyUSB ttyACM (see hyperion doc)
+		"name":"ambilight",               -> filename for your zones led settings (folder zones)
+		"type":"COM",
+		"port":"COM5",                   -> default COM number
+		"white":[255,255,255],           -> define your white value
+		"baudrate":500000,               -> COM baudrate speed (this setting has to be same in hyperion json config and arduino
+		"VM":"hyperion"                  -> VM machine name to launch
+		
+		
+
+For windows:
+Edit the batch file : pathfile / port number /zone name
+Create a shortcut and place it in launcher windows folder
 
 Mode module :
 
