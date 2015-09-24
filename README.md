@@ -14,8 +14,10 @@ Install: npm install adazones
 -usage:
 
 Mode module :
+
   var adazones = require("adazones");
   adazones.init( your zone filename);
 
-Mode server
-node pathfile/adazones.js port:XXXXX zone:XXX
+Mode server :
+
+  node pathfile/adazones.js port:XXXXX zone:XXX
