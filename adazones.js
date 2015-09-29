@@ -300,7 +300,7 @@ var adalight={
 			});
 		}
 	},
-	turnLastState:undefined,
+	turnLastState:'off',
 	setPassthruOn:function(index){
 		var self=this;
 		self.turnLastState=self.zones[index].mode;
@@ -362,32 +362,32 @@ var adalight={
 	//SEE Color module 
 	negateColor:function(index){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).negate().values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).negate().values.rgb);
 		return self;
 	},
 	lightenColor:function(index, lvl){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).lighten(lvl).values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).lighten(lvl).values.rgb);
 		return self;
 	},
 	darkenColor:function(index, level){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).darken(lvl).values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).darken(lvl).values.rgb);
 		return self;
 	},
 	saturateColor:function(index, lvl){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).saturate(lvl).values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).saturate(lvl).values.rgb);
 		return self;
 	},
 	desaturateColor:function(index, lvl){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).desaturate(lvl).values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).desaturate(lvl).values.rgb);
 		return self;
 	},
 	rotateColor:function(index, lvl){
 		var self=this;
-		self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).rotate(lvl).values.rgb);
+		if(self.zones[index].mode==='color') self.setColor(index, self.zones[index].color.rgb(self.zones[index].colorValues.rgb).rotate(lvl).values.rgb);
 		return self;
 	}
 }
